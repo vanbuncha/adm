@@ -1,1 +1,1 @@
-# Repository for subject Advances in Data mining
+# Advances in Data mining at Leiden University
