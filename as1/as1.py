@@ -87,7 +87,7 @@ class recommenderSystem():
         
 if __name__ == '__main__':
             # Specify the file path
-        file_path = 'ml-1m/ratings.dat'
+        file_path = '/Users/markrademaker/Downloads/ml-1m/ratings.dat'
         df_ratings = pd.read_csv(file_path, sep='::',header=None, engine='python')
         df_ratings = df_ratings.rename({0: 'UserID',
                                         1:'MovieID',
@@ -96,7 +96,7 @@ if __name__ == '__main__':
 
         print(df_ratings.head())
         # Specify the file path
-        file_path = 'ml-1m/users.dat'
+        file_path = '/Users/markrademaker/Downloads/ml-1m/users.dat'
         df_users = pd.read_csv(file_path, sep='::',header=None, engine='python')
         df_users = df_users.rename({0: 'UserID',
                                         1:'Gender',
@@ -106,7 +106,7 @@ if __name__ == '__main__':
                                         },axis='columns')
         print(df_users.head())
         # Specify the file path
-        file_path = 'ml-1m/movies.dat'
+        file_path = '/Users/markrademaker/Downloads/ml-1m/movies.dat'
         df_movies = pd.read_csv(file_path, sep='::', header=None, encoding='ISO-8859-1', engine='python')
         df_movies = df_movies.rename({0: 'MovieID',
                                         1:'Title',
@@ -115,5 +115,5 @@ if __name__ == '__main__':
 
         print(df_movies.head())
 
-        rec= recommenderSystem()
-        rec.Naive_1(df_ratings)
+        rec= recommenderSystem();
+        rec.Naive_1(df_ratings);
