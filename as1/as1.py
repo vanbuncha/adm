@@ -34,8 +34,35 @@ class recommenderSystem():
 
         print(f'alpha: {alpha}, beta: {beta}, gamma: {gamma}')
         
-    def function_3(self, train):
-        print("hi")
+    def UV_decomposition(self, df_ratings, nr_features):
+        # Provide U matrix for users
+        # Provide V matrix for movies
+        num_users = df_ratings['UserID'].nunique()
+        num_movies = df_ratings['MovieID'].nunique()
+
+        # Get user-movie interaction
+        R = pd.pivot_table(df_ratings, index='UserID', columns='MovieID', values='Rating').values
+        epochs=100
+        lr= 0.001
+        U = np.random.rand(num_users, nr_features)
+        V = np.random.rand(num_movies, nr_features).T
+        for e in range(epochs):
+            for i in range(num_users):
+                for j in range(num_movies):
+                    if(np.isnan(R[i][j])):
+                        continue
+                    else:
+                        error = R[i][j] - np.dot(U[i, :], V[:, j])
+                        for k in range(nr_features):
+                            U[i][k] += lr * (2 * error * V[k][j] -   U[i][k])
+                            V[k][j] += lr * (2 * error * U[i][k] -   V[k][j])
+            # Compute loss
+            total_error = 0
+            for i in range(num_users):
+                for j in range(num_movies):
+                    if R[i][j] > 0:
+                        total_error += (R[i][j] - np.dot(U[i, :], V[:, j]))**2
+            print(f"Total Error epoch {e}: {total_error}")
         # The UV matrix decomposition
 
     def function_4(self, train):
@@ -117,3 +144,4 @@ if __name__ == '__main__':
 
         rec= recommenderSystem();
         rec.Naive_1(df_ratings);
+        rec.UV_decomposition(df_ratings, nr_features=2);
